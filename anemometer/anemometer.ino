@@ -12,7 +12,7 @@ void setup()
 }
 
 void loop() {
-  meassure();
+  measure();
   Serial.print("Wind Speed: ");
   Serial.print(WindSpeed);       //Speed in km/h
   Serial.print(" km/h - ");
@@ -20,7 +20,7 @@ void loop() {
   Serial.println(" m/s");
 }
 
-void meassure() {
+void measure() {
   InterruptCounter = 0;
   attachInterrupt(digitalPinToInterrupt(SensorPin), countup, RISING);
   delay(1000 * RecordTime);

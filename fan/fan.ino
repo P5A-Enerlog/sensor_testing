@@ -1,4 +1,4 @@
-#define FAN_PIN 25
+#define FAN_PIN 14
 
 int fanSpeed=100;
 const int freq = 5000;
