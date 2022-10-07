@@ -1,10 +1,12 @@
 #include "max6675.h"
 #include "DHT.h"
 
-#define DHTPIN 2
-#define DHTTYPE DHT22
+DHT dht1(36, DHT22);
+DHT dht2(39, DHT22);
+DHT dht3(34, DHT22);
+DHT dht4(35, DHT22);
 
-DHT dht(DHTPIN, DHTTYPE);
+DHT dht();
 
 int thermoDO = 19;
 int thermoCS = 23;
@@ -16,9 +18,15 @@ MAX6675 thermocouple2(thermoCLK, therm2, thermoDO);
 
 void setup() {
   Serial.begin(9600);
+  Serial.println("What DHT22 sensor do you want to test:");
+  int dhtNum = Serial.read();
+  char conv = dhtNum + '0';
+  char* dhtSelect = "dht";
+  strcat(dhtSelect, &conv);
 
-  Serial.println("MAX6675 test");
-  dht.begin();
+  DHT dht(36, DHT22);
+  
+  dht1.begin();
 
   // wait for MAX chip to stabilize
   delay(500);
@@ -26,10 +34,10 @@ void setup() {
 
 void loop() {
   Serial.println("Hum = ");
-  Serial.print(dht.readHumidity());
+  Serial.print(dht1.readHumidity());
   Serial.print("   ");
   Serial.println("Temp = ");
-  Serial.print(dht.readTemperature());
+  Serial.print(dht1.readTemperature());
 
   Serial.println("C1 = ");
   Serial.print(thermocouple1.readCelsius());
@@ -37,6 +45,5 @@ void loop() {
   Serial.print("C2 = ");
   Serial.print(thermocouple2.readCelsius());
 
-  // For the MAX6675 to update, you must delay AT LEAST 250ms between reads!
   delay(1000);
 }
