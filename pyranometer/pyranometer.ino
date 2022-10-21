@@ -1,9 +1,11 @@
 //Pyranomètre SP-215
-int analogPin = A2; // pin de sortie du pyranomètre
+#define analogPin 2 // pin de sortie du pyranomètre
+
 float pyr = 0; // initialisation du pyranomètre
 
 
 void setup() {
+  pinMode(analogPin, INPUT);
 
 
   Serial.begin(9600);
@@ -14,11 +16,13 @@ void setup() {
 
 }
 
+
 void loop() {
 //PYRANOMETRE
 
-  pyr = analogRead(analogPin); ()
-  pyr = pyr * ((0.4 * 5000) / 1023); // conversion de volt à W/m²  output: int between 0 and 1023 corresponding to voltage between 0 and 5V (5000 mV). The sensor output 2.5 mV per W/M²
+  pyr = analogRead(analogPin);
+  //pyr = pyr * ((0.4 * 5000) / 1023); // Arduino Mega conversion output: int between 0 and 1023 corresponding to voltage between 0 and 5V (5000 mV). The sensor output 2.5 mV per W/M²
+  pyr = pyr * ((0.4 * 3300) / 4095); // ESP32 conversion : 0-4096 -> 0-3.3Vs
 
   Serial.println(pyr);
 
